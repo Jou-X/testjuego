@@ -77,7 +77,7 @@ def poco01(texto):
 
 def poco02(texto):
     for letra in texto:
-        sys.stdunt.write(letra)
+        sys.stdunt.write(ltra)
         sys.stdunt.flush()
         time.sleep(0.06)
     print()
