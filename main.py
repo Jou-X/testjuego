@@ -327,3 +327,5 @@ nombres = random.choice(["Misco Jones","Gilito Mcpato","n+i+g+g+a"])
 
 # poco3("Bienvenido")
 # poco2("me llamo", nombres)
+
+# poco1("¿Cómo te llamas?")
