@@ -271,16 +271,18 @@ mobs = {
 
 
 
-
-
-def abitacion_1():
+def habitacion_1():
     global inventario
     while True:
-        print(f"Encontraste {inventario[it]}")
+        item = "botas_cuero"
+        print(f"Encontraste {item}")
+        inventario['inventario_armaduras'][item] += 1
+        abrir_inventario()
         pelea(mobs['mob1'])
+        break
         
 
-
+habitacion_1()
 
 
 # hacer defensa en ataques
