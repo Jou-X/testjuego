@@ -6,9 +6,47 @@ import csv
 import os
 import math
 
-
-vida = 100
 daño = 5
+vida = 100
+armadura = 0
+defensa = 0
+
+
+def equipar_arma():
+
+    global daño
+    equipar = inventario_armas()
+
+    if equipar == "cuchillo":
+
+        cuchillo = 5
+        daño = daño + cuchillo
+        print("+5 daño")
+        return daño
+    
+    if equipar == "espada":
+
+        espada = 20
+        daño = daño + espada
+        print("+20 daño")
+        return daño
+    
+def equipar_armadura():
+    global defensa
+    equipar = inventario_armaduras()
+
+    if equipar == "botas_cuero":
+
+        botas_cuero = 3
+        defensa = defensa + botas_cuero
+        print("+3 defensa")
+        return defensa
+    
+    if equipar == "guantes_cuero":
+        guantes_cuero = 2
+        defensa = defensa + guantes_cuero
+        print("+2 defensa")
+        return defensa
 
 inventario = {
     
@@ -21,6 +59,11 @@ inventario = {
     "inventario_armas" : {
         "cuchillo" : 1,
         "espada" : 0,
+    },
+
+    "inventario_armaduras" : {
+        "botas_cuero" : 1,
+        "guantes_cuero" : 1,
     }
 }
 
@@ -30,15 +73,18 @@ def abrir_inventario():
 
     while True:
 
-        tipo_inventario = input("¿Qúe buscas?. A- Comida B- Armas E- Cerrar Inventario: ").lower()
+        tipo_inventario = input("¿Qúe buscas?. 1- Comida 2- Armas 3- Armaduras 4- Cerrar Inventario: ").lower()
 
-        if tipo_inventario == 'a':
+        if tipo_inventario == '1':
             curar()
             break
-        if tipo_inventario == 'b':
-            inventario_armas()
+        if tipo_inventario == '2':
+            equipar_arma()
             break
-        if tipo_inventario == 'e':
+        if tipo_inventario == '3':
+            equipar_armadura()
+            break
+        if tipo_inventario == '4':
             break
         else:
             print("Respuesta no válida.")
@@ -77,7 +123,6 @@ def inventario_armas():
         if item == 'e':
             print("Saliendo del inventario...")
             break
-
         print()
         if item in inventario['inventario_armas']:
                 
@@ -86,6 +131,33 @@ def inventario_armas():
                 return 0
 
             elif inventario['inventario_armas'][item] ==1:  
+                print(f"Has equipado {item}")
+                return(item)
+        else:
+            print(f"{item} no existe.")
+            continue
+        
+        if item == "e":
+            print("Saliendo del inventario...")
+            break
+
+def inventario_armaduras():
+    while True:
+        print("Pulsa 'e' cuando quieras salir.")
+        item = input(f"Tu inventario es {inventario['inventario_armaduras']}. ¿Qué te gustaría equipar?: ")
+
+        if item == 'e':
+            print("Saliendo del inventario...")
+            break
+
+        print()
+        if item in inventario['inventario_armaduras']:
+                
+            if inventario['inventario_armaduras'][item] ==0:
+                print(f"Aún no has encontrado eso.")
+                return 0
+
+            elif inventario['inventario_armaduras'][item] ==1:  
                 print(f"Has equipado {item}")
                 return(item)
         else:
@@ -116,29 +188,71 @@ def curar():
         print(f"Te has sanado +15. Ahora tienes {vida}")
         return vida
 
-def vida_p(vida):
-    vida = daño_mob()
-    return vida
-    
+vida_m_1 = 50
+vida_m_2 = 60
 
+def mob_1():
+    global vida, vida_m_1
+    daño_m_1 = 4
 
-def daño_mob(daño_m):
+    if vida <= 0:
+        print("Has muerto")
+        quit()
 
-    global vida
+    vida -= daño_m_1
+    print(f"Has recibido {daño_m_1} DPS. Tu vida es {vida}")
 
-    if daño_m >=vida:
+def mob_2():
+    global vida, vida_m_2
+    daño_m_2 = 6 
+
+    if vida <= 0:
         print("Has muerto")
         quit()
     
-    vida = vida - daño_m
-    print(f"Has recibido {daño_m} de daño. Tu vida está a {vida}")
-    return vida
+
+    vida -= daño_m_2
+    print(f"Has recibido {daño_m_2} DPS. Tu vida es {vida}")
+
+def personaje(mob):
+    global daño
+
+    if mob == mob_1:
+        global vida_m_1
+        vida_m_1 -= daño
+        print(f"Daño hecho: {daño}. Vida de M1: {vida_m_1}")
+        if vida_m_1 <= 0:
+            print("Mataste a M1.")
+
+    elif mob == mob_2:
+        global vida_m_2
+        vida_m_2 -= daño
+        print(f"Daño hecho: {daño}. Vida de M2: {vida_m_2}")
+        if vida_m_2 <= 0:
+            print("Mataste a M2.")
+
+def pelea(mob):
+    global vida, vida_m_1, vida_m_2
+
+    while True:
+        if vida <= 0 or (mob == mob_1 and vida_m_1 <= 0) or (mob == mob_2 and vida_m_2 <= 0):
+            break
+
+        mob() 
+        personaje(mob) 
 
 
-daño_mob(2)
+mobs = {
+    'mob1': mob_1,
+    'mob2': mob_2
+}
 
 
-abrir_inventario()
+pelea(mobs['mob2'])  # Seleccionar mob 
+
+
+
+# hacer defensa en ataques
 
 
 
