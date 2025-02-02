@@ -7,7 +7,7 @@ import os
 import math
 
 
-pygame.init()
+'''pygame.init()
 
 ancho = 800
 alto = 600
@@ -25,7 +25,7 @@ while encendido:
 
     pygame.display.flip()
 
-pygame.quit()
+pygame.quit()'''
 
 daño = 5
 vida = 100
@@ -94,18 +94,18 @@ def abrir_inventario():
 
     while True:
 
-        tipo_inventario = input("¿Qúe buscas?. 1- Comida 2- Armas 3- Armaduras 4- Cerrar Inventario: ").lower()
+        tipo_inventario = input("¿Qúe buscas?. 1- Comida 2- Armas 3- Armaduras 4- Cerrar: ").lower()
 
-        if tipo_inventario == '1':
+        if tipo_inventario == 'comida':
             curar()
             break
-        if tipo_inventario == '2':
+        if tipo_inventario == 'armas':
             equipar_arma()
             break
-        if tipo_inventario == '3':
+        if tipo_inventario == 'armaduras':
             equipar_armadura()
             break
-        if tipo_inventario == '4':
+        if tipo_inventario == 'cerrar':
             break
         else:
             print("Respuesta no válida.")
@@ -176,7 +176,7 @@ def inventario_armaduras():
                 
             if inventario['inventario_armaduras'][item] ==0:
                 print(f"Aún no has encontrado eso.")
-                return 0
+                continue
 
             elif inventario['inventario_armaduras'][item] ==1:  
                 print(f"Has equipado {item}")
@@ -252,32 +252,84 @@ def personaje(mob):
         if vida_m_2 <= 0:
             print("Mataste a M2.")
 
+correr = False
+perder_turno = False
+def accion_b():
+    global correr, perder_turno
+    while True:
+        elegir = input(f"1- Ataque 2- Correr 3- Inventario: ").lower()
+        if elegir == 'ataque':
+            break
+        if elegir == 'correr':
+            suerte = random.randint(1,4)
+            if suerte == 1:
+                correr = True
+                break
+            if suerte != 1:
+                perder_turno = True
+        
+                print("No pudiste escapar! Pierdes un turno...")
+                return perder_turno
+            break
+        if elegir == 'inventario':
+            abrir_inventario()
+            if abrir_inventario() == None:
+                continue
+            break
+        else:
+            print("No puedes hacer eso.")
+            continue
+    return correr
+
+
 def pelea(mob):
-    global vida, vida_m_1, vida_m_2
+    global vida, vida_m_1, vida_m_2, correr, perder_turno
 
     while True:
+        
+        accion_b()
+        if correr == True:
+            print("Escapaste con éxito.")
+            break
+       
+        if perder_turno == False:
+            personaje(mob)
+        elif perder_turno == True:
+            mob()
+            perder_turno = False
+            continue
+        
         if vida <= 0 or (mob == mob_1 and vida_m_1 <= 0) or (mob == mob_2 and vida_m_2 <= 0):
             break
+        
 
         mob() 
-        personaje(mob) 
-
+    
+        
 
 mobs = {
     'mob1': mob_1,
     'mob2': mob_2
 }
 
-
+def poco_general(texto):
+    for letra in texto:
+        sys.stdout.write(letra)
+        sys.stdout.flush()
+        time.sleep(0.025)
+    print()
 
 
 def habitacion_1():
     global inventario
     while True:
+        poco_general("Entraste en una habitación 5x5 y ves algo en la esquina...")
+        print()
         item = "botas_cuero"
-        print(f"Encontraste {item}")
+        print(f"Encontraste {item}!")
         inventario['inventario_armaduras'][item] += 1
         abrir_inventario()
+        print("Cuidado! Apareció un mounstruo!")
         pelea(mobs['mob1'])
         break
         
@@ -293,16 +345,16 @@ habitacion_1()
 
 
 
-
-
-
 def poco1(texto):
     for letra in texto:
         sys.stdunt.write(letra)
         sys.stdunt.flush()
         time.sleep(0.1)
     print()
-    
+
+
+
+
 
 
 def poco2(texto):
@@ -332,14 +384,12 @@ def poco02(texto):
 
 
 
-
 def poco03(texto):
     for letra in texto:
         sys.stdunt.write(letra)
         sys.stdunt.flush()
         time.sleep(0.04)
     print()
-
 
 
 
@@ -358,5 +408,4 @@ nombres = random.choice(["Misco Jones","Gilito Mcpato","n+i+g+g+a"])
 
 
 
-# poco3("Bienvenido")
 # poco2("me llamo", nombres)
