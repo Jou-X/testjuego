@@ -6,6 +6,27 @@ import csv
 import os
 import math
 
+
+pygame.init()
+
+ancho = 800
+alto = 600
+pantalla = pygame.display.set_mode((ancho,alto))
+pygame.display.set_caption("Juego")
+
+encendido = True
+
+while encendido:
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            encendido = False
+
+    pantalla.fill((0,0,0))
+
+    pygame.display.flip()
+
+pygame.quit()
+
 daño = 5
 vida = 100
 armadura = 0
@@ -62,8 +83,8 @@ inventario = {
     },
 
     "inventario_armaduras" : {
-        "botas_cuero" : 1,
-        "guantes_cuero" : 1,
+        "botas_cuero" : 0,
+        "guantes_cuero" : 0,
     }
 }
 
@@ -248,7 +269,17 @@ mobs = {
 }
 
 
-pelea(mobs['mob2'])  # Seleccionar mob 
+
+
+
+
+def abitacion_1():
+    global inventario
+    while True:
+        print(f"Encontraste {inventario[it]}")
+        pelea(mobs['mob1'])
+        
+
 
 
 
@@ -327,6 +358,3 @@ nombres = random.choice(["Misco Jones","Gilito Mcpato","n+i+g+g+a"])
 
 # poco3("Bienvenido")
 # poco2("me llamo", nombres)
-
-# poco1("¿Cómo te llamas?")
-# joel
