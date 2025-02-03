@@ -68,6 +68,8 @@ def equipar_armadura():
         defensa = defensa + guantes_cuero
         print("+2 defensa")
         return defensa
+    
+
 
 inventario = {
     
@@ -333,6 +335,20 @@ def habitacion_1():
         pelea(mobs['mob1'])
         break
         
+def equipar_a_inventario(item):
+    global inventario
+
+    if item in inventario["inventario_comida"]:
+        inventario["inventario_comida"][item] +=1
+    
+    if item in inventario["inventario_armas"]:
+        inventario["inventario_armas"][item] +=1
+        
+    if item in inventario["inventario_armaduras"]:
+        inventario["inventario_armaduras"][item] +=1
+        
+
+equipar_a_inventario("pan")
 
 habitacion_1()
 
