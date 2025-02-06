@@ -1,21 +1,16 @@
-import pygame
+import tkinter as tk
 
-pygame.init()
+# Crear la ventana principal
+ventana = tk.Tk()
+ventana.title("Mi Programa")
 
-ancho = 800
-alto = 600
-pantalla = pygame.display.set_mode((ancho,alto))
-pygame.display.set_caption("Juego")
+# Añadir un widget de etiqueta (Label) a la ventana
+etiqueta = tk.Label(ventana, text="¡Hola, mundo!")
+etiqueta.pack(padx=20, pady=20)
 
-encendido = True
+# Añadir un botón para cerrar la ventana
+boton_cerrar = tk.Button(ventana, text="Cerrar", command=ventana.quit)
+boton_cerrar.pack(pady=10)
 
-while encendido:
-    for evento in pygame.event.get():
-        if evento.type == pygame.QUIT:
-            encendido = False
-
-    pantalla.fill((0,0,0))
-
-    pygame.display.flip()
-
-pygame.quit()
+# Iniciar el bucle principal de la ventana
+ventana.mainloop()
