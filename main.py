@@ -294,6 +294,14 @@ def poco2(texto):
 
 
 
+def poco3(texto):
+    for letra in texto:
+        sys.stdout.write(letra)
+        sys.stdout.flush()
+        time.sleep(0.4)
+    print()
+
+
 def poco01(texto):
     for letra in texto:
         sys.stdout.write(letra)
@@ -309,6 +317,7 @@ def poco02(texto):
         sys.stdout.flush()
         time.sleep(0.06)
     print()
+    return input()
 
 
 
@@ -323,12 +332,6 @@ def poco03(texto):
 
 
 
-def poco3(texto):
-    for letra in texto:
-        sys.stdout.write(letra)
-        sys.stdout.flush()
-        time.sleep(0.4)
-    print()
 
 
 
@@ -339,8 +342,15 @@ nombres = random.choice(["Misco Jones","Gilito Mcpato","n+i+g+g+a"])
 
 
 def intro():
-    poco03("Hola,")
-    poco1(f"me llamo {nombres}")
-    poco1(f"tu inventario es: {inventario}")
+    poco3("Hola,")
+    poco01(f"me llamo {nombres}")
+    poco03(f"tu inventario es: {inventario['inventario_comida']} {inventario['inventario_armas']} {inventario['inventario_armaduras']}")
+    respuesta = poco02(f"¿Quieres abrir tu inventario?").lower()
+    if respuesta == "si":
+        abrir_inventario()
+    else:
+        poco02("Vale, entendido.")
+        exit()
 
 intro()
+
