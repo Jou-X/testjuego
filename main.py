@@ -14,6 +14,15 @@ armadura = 0
 defensa = 0
 
 
+
+# la d significa duravilidad
+
+dbotascuero = 4
+dpetocuero = 4
+dpantaloneracuero = 4
+dcasco = 4
+
+
 def equipar_arma():
 
     global daño
@@ -257,22 +266,46 @@ mobs = {
 def habitacion_1():
     global inventario
     while True:
-        item = 'botas_cuero'
-        inventario['inventario_armaduras'][item] +=1
-        print(f"Encontraste {item}")
+        inventario = inventario['inventario_armaduras']
+        print(f"Encontraste {inventario[inventario_armaduras][item]}")
         pelea(mobs['mob1'])
-        break
         
 
-habitacion_1()
+
 
 
 # hacer defensa en ataques
+def defensa(enemigo):
+    global defensa
+    if enemigo == mob_1 or mob_2:
+        daño = daño - defensa
+        poco02(f"tu armadura te ha defendido {defensa} puntos de daño")
+
+    dcasco -= 1
+    dpetocuero -= 1
+    dpantaloneracuero -= 1
+
+    dbotascuero -= 1
+
+    if dcasco == 0:
+        poco03("Tu casco se ha roto")
+        casco = 0
+            
+    elif dbotascuero == 0:
+        poco03("Tus botas se ha roto")
+        botas_cuero = 0
+            
+    elif dpetocuero == 0:
+        poco03("Tu peto se ha roto")
+        peto_cuero = 0
+            
+    elif dpantaloneracuero == 0:
+        poco03("Tus pantalones se ha roto")
+        pantalonera_cuero = 0
 
 
-
-
-
+    
+            
 
 
 
@@ -344,7 +377,7 @@ nombres = random.choice(["Misco Jones","Gilito Mcpato","n+i+g+g+a"])
 
 
 def intro():
-    poco3("Hola,")
+    poco2("Hola,")
     poco01(f"me llamo {nombres}")
     poco03(f"tu inventario es: {inventario['inventario_comida']} {inventario['inventario_armas']} {inventario['inventario_armaduras']}")
     respuesta = poco02(f"¿Quieres abrir tu inventario?").lower()
