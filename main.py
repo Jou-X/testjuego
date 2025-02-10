@@ -7,6 +7,25 @@ import os
 import math
 
 
+'''pygame.init()
+
+ancho = 800
+alto = 600
+pantalla = pygame.display.set_mode((ancho,alto))
+pygame.display.set_caption("Juego")
+
+encendido = True
+
+while encendido:
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            encendido = False
+
+    pantalla.fill((0,0,0))
+
+    pygame.display.flip()
+
+pygame.quit()'''
 
 daño = 5
 vida = 100
@@ -49,6 +68,8 @@ def equipar_armadura():
         defensa = defensa + guantes_cuero
         print("+2 defensa")
         return defensa
+    
+
 
 inventario = {
     
@@ -75,18 +96,18 @@ def abrir_inventario():
 
     while True:
 
-        tipo_inventario = input("¿Qúe buscas?. 1- Comida 2- Armas 3- Armaduras 4- Cerrar Inventario: ").lower()
+        tipo_inventario = input("¿Qúe buscas?. 1- Comida 2- Armas 3- Armaduras 4- Cerrar: ").lower()
 
-        if tipo_inventario == '1':
+        if tipo_inventario == 'comida':
             curar()
             break
-        if tipo_inventario == '2':
+        if tipo_inventario == 'armas':
             equipar_arma()
             break
-        if tipo_inventario == '3':
+        if tipo_inventario == 'armaduras':
             equipar_armadura()
             break
-        if tipo_inventario == '4':
+        if tipo_inventario == 'cerrar':
             break
         else:
             print("Respuesta no válida.")
@@ -157,7 +178,7 @@ def inventario_armaduras():
                 
             if inventario['inventario_armaduras'][item] ==0:
                 print(f"Aún no has encontrado eso.")
-                return 0
+                continue
 
             elif inventario['inventario_armaduras'][item] ==1:  
                 print(f"Has equipado {item}")
@@ -233,65 +254,147 @@ def personaje(mob):
         if vida_m_2 <= 0:
             print("Mataste a M2.")
 
+correr = False
+perder_turno = False
+def accion_b():
+    global correr, perder_turno
+    while True:
+        elegir = input("1- Ataque 2- Correr 3- Inventario: ").lower()
+        if elegir == 'ataque':
+            break
+        if elegir == 'correr':
+            suerte = random.randint(1,4)
+            if suerte == 1:
+                correr = True
+                break
+            if suerte != 1:
+                perder_turno = True
+        
+                print("No pudiste escapar! Pierdes un turno...")
+                return perder_turno
+            break
+        if elegir == 'inventario':
+            abrir_inventario()
+            if abrir_inventario() == None:
+                continue
+            break
+        else:
+            print("No puedes hacer eso.")
+            continue
+    return correr
+
+
 def pelea(mob):
-    global vida, vida_m_1, vida_m_2
+    global vida, vida_m_1, vida_m_2, correr, perder_turno
 
     while True:
+        
+        accion_b()
+        if correr == True:
+            print("Escapaste con éxito.")
+            break
+       
+        if perder_turno == False:
+            personaje(mob)
+        elif perder_turno == True:
+            mob()
+            perder_turno = False
+            continue
+        
         if vida <= 0 or (mob == mob_1 and vida_m_1 <= 0) or (mob == mob_2 and vida_m_2 <= 0):
             break
+        
 
         mob() 
-        personaje(mob) 
-
+    
+        
 
 mobs = {
     'mob1': mob_1,
     'mob2': mob_2
 }
 
-
-
-
+def poco_general(texto):
+    for letra in texto:
+        sys.stdout.write(letra)
+        sys.stdout.flush()
+        time.sleep(0.025)
+    print()
 
 
 def habitacion_1():
     global inventario
     while True:
-        item = 'botas_cuero'
-        inventario['inventario_armaduras'][item] +=1
-        print(f"Encontraste {item}")
+        poco_general("Entraste en una habitación 5x5 y ves algo en la esquina...")
+        print()
+        item = "botas_cuero"
+        print(f"Encontraste {item}!")
+        inventario['inventario_armaduras'][item] += 1
+        abrir_inventario()
+        print("Cuidado! Apareció un mounstruo!")
         pelea(mobs['mob1'])
         break
         
+def equipar_a_inventario(item):
 
+    global inventario
+
+    if item in inventario["inventario_comida"]:
+        inventario["inventario_comida"][item] +=1
+    
+    if item in inventario["inventario_armas"]:
+        inventario["inventario_armas"][item] +=1
+        
+    if item in inventario["inventario_armaduras"]:
+        inventario["inventario_armaduras"][item] +=1
+        
+
+equipar_a_inventario("pan")
 habitacion_1()
-
-
-# hacer defensa en ataques
-
-
-
-
-
-
-
 
 
 
 def poco1(texto):
     for letra in texto:
-        sys.stdout.write(letra)
-        sys.stdout.flush()
+        sys.stdunt.write(letra)
+        sys.stdunt.flush()
         time.sleep(0.1)
     print()
-    
+
 
 
 def poco2(texto):
     for letra in texto:
-        sys.stdout.write(letra)
-        sys.stdout.flush()
+        sys.stdunt.write(letra)
+        sys.stdunt.flush()
         time.sleep(0.2)
+    print()
+
+
+
+def poco01(texto):
+    for letra in texto:
+        sys.stdunt.write(letra)
+        sys.stdunt.flush()
+        time.sleep(0.08)
+    print()
+
+
+
+def poco02(texto):
+    for letra in texto:
+        sys.stdunt.write(letra)
+        sys.stdunt.flush()
+        time.sleep(0.06)
+    print()
+
+
+
+def poco03(texto):
+    for letra in texto:
+        sys.stdunt.write(letra)
+        sys.stdunt.flush()
+        time.sleep(0.04)
     print()
 
 
@@ -304,55 +407,8 @@ def poco3(texto):
     print()
 
 
-def poco01(texto):
-    for letra in texto:
-        sys.stdout.write(letra)
-        sys.stdout.flush()
-        time.sleep(0.08)
-    print()
-
-
-
-def poco02(texto):
-    for letra in texto:
-        sys.stdout.write(letra)
-        sys.stdout.flush()
-        time.sleep(0.06)
-    print()
-    return input()
-
-
-
-
-def poco03(texto):
-    for letra in texto:
-        sys.stdout.write(letra)
-        sys.stdout.flush()
-        time.sleep(0.04)
-    print()
-
-
-
-
-
-
 
 nombres = random.choice(["Misco Jones","Gilito Mcpato","n+i+g+g+a"])
 
 
-
-
-
-def intro():
-    poco3("Hola,")
-    poco01(f"me llamo {nombres}")
-    poco03(f"tu inventario es: {inventario['inventario_comida']} {inventario['inventario_armas']} {inventario['inventario_armaduras']}")
-    respuesta = poco02(f"¿Quieres abrir tu inventario?").lower()
-    if respuesta == "si":
-        abrir_inventario()
-    else:
-        poco02("Vale, entendido.")
-        exit()
-
-intro()
-
+# poco2("me llamo", nombres)
