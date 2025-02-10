@@ -334,10 +334,6 @@ def poco_general(texto):
 def habitacion_1():
     global inventario
     while True:
-<<<<<<< HEAD
-        inventario = inventario['inventario_armaduras']
-        print(f"Encontraste {inventario[inventario_armaduras][item]}")
-=======
         poco_general("Entraste en una habitación 5x5 y ves algo en la esquina...")
         print()
         item = "botas_cuero"
@@ -345,18 +341,16 @@ def habitacion_1():
         inventario['inventario_armaduras'][item] += 1
         abrir_inventario()
         print("Cuidado! Apareció un mounstruo!")
->>>>>>> 48ef39a1d7385ce6f79518e23fa5ad7ff4828ceb
+
         pelea(mobs['mob1'])
-        
-def equipar_a_inventario(item):
-
-<<<<<<< HEAD
 
 
+habitacion_1()
 
-# hacer defensa en ataques
-def defensa(enemigo):
+'''def defensa(enemigo):
+    
     global defensa
+    
     if enemigo == mob_1 or mob_2:
         daño = daño - defensa
         poco02(f"tu armadura te ha defendido {defensa} puntos de daño")
@@ -381,35 +375,10 @@ def defensa(enemigo):
             
     elif dpantaloneracuero == 0:
         poco03("Tus pantalones se ha roto")
-        pantalonera_cuero = 0
+        pantalonera_cuero = 0'''
 
 
-    
-            
-
-
-
-
-=======
-    global inventario
-
-    if item in inventario["inventario_comida"]:
-        inventario["inventario_comida"][item] +=1
-    
-    if item in inventario["inventario_armas"]:
-        inventario["inventario_armas"][item] +=1
-        
-    if item in inventario["inventario_armaduras"]:
-        inventario["inventario_armaduras"][item] +=1
-        
-
-equipar_a_inventario("pan")
-habitacion_1()
-
-
->>>>>>> 48ef39a1d7385ce6f79518e23fa5ad7ff4828ceb
-
-def poco1(texto):
+'''def poco1(texto):
     for letra in texto:
         sys.stdunt.write(letra)
         sys.stdunt.flush()
@@ -453,36 +422,11 @@ def poco03(texto):
     print()
 
 
-
 def poco3(texto):
     for letra in texto:
         sys.stdout.write(letra)
         sys.stdout.flush()
         time.sleep(0.4)
-    print()
-
-
+    print()'''
 
 nombres = random.choice(["Misco Jones","Gilito Mcpato","n+i+g+g+a"])
-
-
-<<<<<<< HEAD
-
-
-
-def intro():
-    poco2("Hola,")
-    poco01(f"me llamo {nombres}")
-    poco03(f"tu inventario es: {inventario['inventario_comida']} {inventario['inventario_armas']} {inventario['inventario_armaduras']}")
-    respuesta = poco02(f"¿Quieres abrir tu inventario?").lower()
-    if respuesta == "si":
-        abrir_inventario()
-    else:
-        poco02("Vale, entendido.")
-        exit()
-
-intro()
-
-=======
-# poco2("me llamo", nombres)
->>>>>>> 48ef39a1d7385ce6f79518e23fa5ad7ff4828ceb
